@@ -2,5 +2,7 @@
 
 void advanced(string selectedCase){
     // insert your code here
-    cout << "start your advanced version of data structure final from here!" << endl;
+    cerr << "Advanced Verson for " << selectedCase << endl;
+
+    readcase(selectedCase);
 }
