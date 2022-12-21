@@ -1,0 +1,8 @@
+Makefile
+/testcases
+/result
+/bin
+/.vscode
+*.pdf
+*.zip
+*.txt
