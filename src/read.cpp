@@ -2,6 +2,7 @@
 stringstream ss;
 double discount;
 int count_limit;
+int max_user_id;
 double ori_price[MAX_BIKE];
 Bike bike[MAX_BIKE];
 ll edge[MAX_STATION][MAX_STATION];
@@ -96,6 +97,7 @@ void read_user(string selectedCase)
         string buffer;
         ss >> id;
         user[id].id = id;
+        max_user_id = max(max_user_id, id);
         ss >> ch;
         ss >> buffer;
         int accept_n = 0;

@@ -5,4 +5,5 @@ void advanced(string selectedCase){
     cerr << "Advanced Verson for " << selectedCase << endl;
 
     readcase(selectedCase);
+    floyd_warshall();
 }
