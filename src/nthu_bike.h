@@ -4,96 +4,34 @@
 #include <fstream>
 #include <random>
 using namespace std;
-typedef long long ll;
-
-template <typename T>
-class myvector
-{
-public:
-    myvector() : v_size(0), v_capacity(0), data(nullptr) {}
-    myvector(int n, const T &val = T())
-        : v_size(n), v_capacity(n), data(new T[n])
-    {
-        for (int i = 0; i < n; i++)
-            data[i] = val;
-    }
-    ~myvector() { delete[] data; }
-
-    int size() const { return v_size; }
-
-    T &operator[](int idx)
-    {
-        if (idx < 0)
-            return data[v_size + idx];
-        return data[idx];
-    }
-
-    void push_back(const T &val)
-    {
-        if (v_size == v_capacity)
-        {
-            v_capacity = (v_capacity == 0) ? 1 : v_capacity * 2;
-            T *new_data = new T[v_capacity];
-            for (int i = 0; i < v_size; i++)
-                new_data[i] = data[i];
-            delete[] data;
-            data = new_data;
-        }
-        data[v_size++] = val;
-    }
-
-private:
-    T *data;
-    int v_size, v_capacity;
-};
 
 class Bike
 {
 public:
-    int id, station, count, aviable;
+    int type, id, station, count, aviable;
     double price;
     Bike() {}
     Bike(int id, int station, double price, int count)
         : id(id), station(station), price(price), count(count), aviable(0) {}
-    Bike& operator=(const Bike &other)
-    {
-        id = other.id;
-        station = other.station;
-        count = other.count;
-        price = other.price;
-        aviable = other.aviable;
-        return *this;
-    }
-};
-
-class Bike_Type
-{
-public:
-    myvector<Bike> bike;
-    double ori_price;
+    Bike &operator=(const Bike &);
+    bool operator<(const Bike &);
+    bool operator>(const Bike &);
 };
 
 class User
 {
 public:
     int id, start_time, end_time, start, end;
-    myvector<int> accept_bike;
+    int *accept_bike;
+    User();
+    bool operator<(const User &);
+    bool operator>(const User &);
+    int &operator[](int);
+    void push(int);
+    int size();
 
-    bool operator<(const User &rhs)
-    {
-        if (start_time != rhs.start_time)
-            return start_time < rhs.start_time;
-        else
-            return id < rhs.id;
-    }
-
-    bool operator>(const User &rhs)
-    {
-        if (start_time != rhs.start_time)
-            return start_time > rhs.start_time;
-        else
-            return id > rhs.id;
-    }
+private:
+    int _capacity, _size;
 };
 
 const int MAX_USER = 100087;
@@ -107,10 +45,12 @@ extern stringstream ss; // 共用節省資源
 
 extern double discount;
 extern int count_limit;
-extern int max_user_id;
-extern Bike_Type BT[MAX_BIKE];
-extern ll edge[MAX_STATION][MAX_STATION];
+extern int max_bike_id, max_user_id, max_station_id, max_bike_type;
+extern double ori_price[MAX_BIKE];
+extern Bike bike[MAX_BIKE];
+extern int edge[MAX_STATION][MAX_STATION];
 extern User user[MAX_USER];
+extern int *type_idx;
 
 // basic.cpp
 void basic(string selectedCase);

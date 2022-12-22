@@ -2,9 +2,10 @@
 stringstream ss;
 double discount;
 int count_limit;
-int max_user_id;
-Bike_Type BT[MAX_BIKE];
-ll edge[MAX_STATION][MAX_STATION];
+int max_bike_id, max_user_id, max_station_id, max_bike_type;
+double ori_price[MAX_BIKE];
+Bike bike[MAX_BIKE];
+int edge[MAX_STATION][MAX_STATION];
 User user[MAX_USER];
 
 void readcase(string selectedCase)
@@ -28,7 +29,7 @@ void read_bikeinfo(string selectedCase)
     char ch;
     int idx;
     while (ss >> ch >> idx)
-        ss >> BT[idx].ori_price;
+        ss >> ori_price[idx];
 }
 
 void read_bike(string selectedCase)
@@ -46,8 +47,10 @@ void read_bike(string selectedCase)
         int type, id, station, count;
         double price;
         ss >> type >> id;
-        ss >> ch >> station >> price >> count;
-        BT[type].bike.push_back(Bike(id, station, price, count));
+        max_bike_id = max(max_bike_id, id);
+        bike[id].id = id;
+        bike[id].type = type;
+        ss >> ch >> bike[id].station >> bike[id].price >> bike[id].count;
     }
 }
 
@@ -60,7 +63,7 @@ void read_map(string selectedCase)
             if (i == j)
                 edge[i][j] = 0;
             else
-                edge[i][j] = 1e18 + 87;
+                edge[i][j] = 9487;
         }
 
     string path = "./testcases/" + selectedCase + "/map.txt";
@@ -77,6 +80,7 @@ void read_map(string selectedCase)
         ss >> u >> ch >> v >> w;
         edge[u][v] = w;
         edge[v][u] = w;
+        max_station_id = max(max_station_id, max(u, v));
     }
 }
 
@@ -108,7 +112,8 @@ void read_user(string selectedCase)
             }
             else if (tmp == ',')
             {
-                user[id].accept_bike.push_back(accept_n);
+                user[id].push(accept_n);
+                max_bike_type = max(max_bike_type, accept_n);
                 accept_n = 0;
             }
             else
@@ -117,7 +122,8 @@ void read_user(string selectedCase)
                 accept_n += (tmp - '0');
             }
         }
-        user[id].accept_bike.push_back(accept_n);
+        user[id].push(accept_n);
+        max_bike_type = max(max_bike_type, accept_n);
         ss >> user[id].start_time >> user[id].end_time >> ch >> user[id].start >> ch >> user[id].end;
     }
 }
