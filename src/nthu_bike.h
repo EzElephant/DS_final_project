@@ -50,8 +50,27 @@ private:
 class Bike
 {
 public:
-    int type, id, station, count;
+    int id, station, count, aviable;
     double price;
+    Bike() {}
+    Bike(int id, int station, double price, int count)
+        : id(id), station(station), price(price), count(count), aviable(0) {}
+    Bike& operator=(const Bike &other)
+    {
+        id = other.id;
+        station = other.station;
+        count = other.count;
+        price = other.price;
+        aviable = other.aviable;
+        return *this;
+    }
+};
+
+class Bike_Type
+{
+public:
+    myvector<Bike> bike;
+    double ori_price;
 };
 
 class User
@@ -89,8 +108,7 @@ extern stringstream ss; // 共用節省資源
 extern double discount;
 extern int count_limit;
 extern int max_user_id;
-extern double ori_price[MAX_BIKE];
-extern Bike bike[MAX_BIKE];
+extern Bike_Type BT[MAX_BIKE];
 extern ll edge[MAX_STATION][MAX_STATION];
 extern User user[MAX_USER];
 
@@ -109,7 +127,7 @@ void read_user(string selectedCase);
 
 // algorithm.cpp
 void floyd_warshall(void);
-template <typename T> 
+template <typename T>
 void insertion_sort(T *arr, int left, int right)
 {
     for (int i = left + 1; i <= right; i++)
@@ -125,8 +143,8 @@ void insertion_sort(T *arr, int left, int right)
     }
 }
 
-template <typename T> void 
-quick_sort(T *arr, int left, int right)
+template <typename T>
+void quick_sort(T *arr, int left, int right)
 {
     if (left >= right)
         return;

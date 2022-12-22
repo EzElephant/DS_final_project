@@ -3,8 +3,7 @@ stringstream ss;
 double discount;
 int count_limit;
 int max_user_id;
-double ori_price[MAX_BIKE];
-Bike bike[MAX_BIKE];
+Bike_Type BT[MAX_BIKE];
 ll edge[MAX_STATION][MAX_STATION];
 User user[MAX_USER];
 
@@ -29,7 +28,7 @@ void read_bikeinfo(string selectedCase)
     char ch;
     int idx;
     while (ss >> ch >> idx)
-        ss >> ori_price[idx];
+        ss >> BT[idx].ori_price;
 }
 
 void read_bike(string selectedCase)
@@ -44,11 +43,11 @@ void read_bike(string selectedCase)
     char ch;
     while (ss >> ch)
     {
-        int type, id;
+        int type, id, station, count;
+        double price;
         ss >> type >> id;
-        bike[id].type = type;
-        bike[id].id = id;
-        ss >> ch >> bike[id].station >> bike[id].price >> bike[id].count;
+        ss >> ch >> station >> price >> count;
+        BT[type].bike.push_back(Bike(id, station, price, count));
     }
 }
 
