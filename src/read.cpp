@@ -81,9 +81,10 @@ void read_map(string selectedCase)
     {
         int u, v, w;
         ss >> u >> ch >> v >> w;
+        if (u > v)
+            swap(u, v);
         edge[u][v] = w;
-        edge[v][u] = w;
-        max_station_id = max(max_station_id, max(u, v));
+        max_station_id = max(max_station_id, v);
     }
 }
 
