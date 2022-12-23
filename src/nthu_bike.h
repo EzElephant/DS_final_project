@@ -43,7 +43,7 @@ public:
     bool operator>(const Record &);
 };
 
-const int MAX_USER = 100087;
+const int MAX_USER = 200087;
 const int MAX_BIKE = 10087;
 const int MAX_STATION = 1001;
 const int CUT = 50;

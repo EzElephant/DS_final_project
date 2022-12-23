@@ -20,38 +20,31 @@ void basic(string selectedCase)
     {
         User &request = user[i];
         int distance = edge[request.start][request.end];
-        if (request.end_time - request.start_time < distance)
+        if (request.end_time - request.start_time <= distance)
             continue;
         double mx = -1;
-        int mx_idx;
+        int mx_idx = -1;
         for (int j = 0; j < request.size(); j++)
         {
             int type = request[j];
             for (int k = type_idx[type]; k < type_idx[type + 1]; k++)
             {
                 Bike &cur = bike[k];
-                if (cur.station == request.start && cur.aviable <= request.start_time && cur.count < count_limit)
+                if ((cur.station == request.start) && (cur.aviable <= request.start_time) && (cur.count < count_limit))
                 {
-                    if (mx == -1)
+                    if (cur.price > mx)
                     {
                         mx = cur.price;
                         mx_idx = k;
-                        break;
                     }
                     else if (cur.price == mx)
                     {
                         if (cur.id < bike[mx_idx].id)
                         {
                             mx_idx = k;
-                            break;
                         }
                     }
-                    else if (cur.price > mx)
-                    {
-                        mx = cur.price;
-                        mx_idx = k;
-                        break;
-                    }
+                    break;
                 }
             }
         }
