@@ -21,7 +21,8 @@ public:
 class User
 {
 public:
-    int id, start_time, end_time, start, end;
+    int id, start_time, end_time, start, end, bike_id, used_start, used_end, revenue;
+    bool accept;
     int *accept_bike;
     User();
     bool operator<(const User &);
@@ -32,6 +33,14 @@ public:
 
 private:
     int _capacity, _size;
+};
+
+class Record
+{
+public:
+    int bike_id, start, end, start_time, end_time, rider;
+    bool operator<(const Record &);
+    bool operator>(const Record &);
 };
 
 const int MAX_USER = 100087;
@@ -45,25 +54,33 @@ extern stringstream ss; // 共用節省資源
 
 extern double discount;
 extern int count_limit;
-extern int max_bike_id, max_user_id, max_station_id, max_bike_type;
+extern int max_bike_id, max_user_id, max_station_id, max_bike_type, max_record_id;
+extern bool over;
 extern double ori_price[MAX_BIKE];
 extern Bike bike[MAX_BIKE];
 extern int edge[MAX_STATION][MAX_STATION];
 extern User user[MAX_USER];
 extern int *type_idx;
+extern Record record[2 * MAX_USER];
 
 // basic.cpp
-void basic(string selectedCase);
+void basic(string);
 
 // advanced.cpp
-void advanced(string selectedCase);
+void advanced(string);
 
 // read.cpp
-void readcase(string selectedCase);
-void read_bikeinfo(string selectedCase);
-void read_bike(string selectedCase);
-void read_map(string selectedCase);
-void read_user(string selectedCase);
+void readcase(string);
+void read_bikeinfo(string);
+void read_bike(string);
+void read_map(string);
+void read_user(string);
+
+// write.cpp
+void writecase(string);
+void write_station(string);
+void write_user(string);
+void write_record(string);
 
 // algorithm.cpp
 void floyd_warshall(void);

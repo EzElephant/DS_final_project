@@ -14,44 +14,78 @@ Bike &Bike::operator=(const Bike &other)
 
 bool Bike::operator<(const Bike &rhs)
 {
-    if (type != rhs.type)
-        return type < rhs.type;
-    else if (count != rhs.count)
-        return count < rhs.count;
+    if (!over)
+    {
+        if (type != rhs.type)
+            return type < rhs.type;
+        else if (count != rhs.count)
+            return count < rhs.count;
+        else
+            return id < rhs.id;
+    }
     else
-        return id < rhs.id;
+    {
+        if (station != rhs.station)
+            return station < rhs.station;
+        else
+            return id < rhs.id;
+    }
 }
 
 bool Bike::operator>(const Bike &rhs)
 {
-    if (type != rhs.type)
-        return type > rhs.type;
-    else if (count != rhs.count)
-        return count > rhs.count;
+    if (!over)
+    {
+        if (type != rhs.type)
+            return type > rhs.type;
+        else if (count != rhs.count)
+            return count > rhs.count;
+        else
+            return id > rhs.id;
+    }
     else
-        return id > rhs.id;
+    {
+        if (station != rhs.station)
+            return station > rhs.station;
+        else
+            return id > rhs.id;
+    }
 }
 
 // User
-User::User() : _size(0), _capacity(1)
+User::User() : _size(0), _capacity(1), accept(false)
 {
     accept_bike = new int[1];
 }
 
 bool User::operator<(const User &rhs)
 {
-    if (start_time != rhs.start_time)
-        return start_time < rhs.start_time;
+    if (!over)
+    {
+        if (start_time != rhs.start_time)
+            return start_time < rhs.start_time;
+        else
+            return id < rhs.id;
+    }
     else
+    {
         return id < rhs.id;
+    }
 }
 
 bool User::operator>(const User &rhs)
 {
-    if (start_time != rhs.start_time)
-        return start_time > rhs.start_time;
+    if (!over)
+    {
+        if (start_time != rhs.start_time)
+            return start_time > rhs.start_time;
+        else
+            return id > rhs.id;
+    }
     else
+    {
         return id > rhs.id;
+    }
 }
 
 int &User::operator[](int idx)
@@ -76,3 +110,13 @@ void User::push(int val)
 }
 
 int User::size() { return _size; }
+
+bool Record::operator<(const Record &rhs)
+{
+    return rider < rhs.rider;
+}
+
+bool Record::operator>(const Record &rhs)
+{
+    return rider > rhs.rider;
+}

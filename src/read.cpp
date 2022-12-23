@@ -2,14 +2,17 @@
 stringstream ss;
 double discount;
 int count_limit;
-int max_bike_id, max_user_id, max_station_id, max_bike_type;
+bool over;
+int max_bike_id, max_user_id, max_station_id, max_bike_type, max_record_id;
 double ori_price[MAX_BIKE];
 Bike bike[MAX_BIKE];
 int edge[MAX_STATION][MAX_STATION];
 User user[MAX_USER];
+Record record[2 * MAX_USER];
 
 void readcase(string selectedCase)
 {
+    over = false;
     read_bikeinfo(selectedCase);
     read_bike(selectedCase);
     read_map(selectedCase);

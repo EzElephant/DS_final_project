@@ -2,6 +2,7 @@ Makefile
 /testcases
 /result
 /bin
+/sort_ans
 /.vscode
 *.pdf
 *.zip
