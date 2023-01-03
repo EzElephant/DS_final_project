@@ -94,7 +94,7 @@ bool User::operator>(const User &rhs)
             if (start_time != rhs.start_time)
                 return start_time > rhs.start_time;
             else if (distance != rhs.distance)
-                return distance > rhs.distance;
+                return distance < rhs.distance;
             else
                 return id > rhs.id;
         }

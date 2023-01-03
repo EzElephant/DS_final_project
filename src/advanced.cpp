@@ -24,6 +24,10 @@ void advanced(string selectedCase)
 
     for (int i = 0; i <= max_user_id;)
     {
+        auto T_cur = std::chrono::system_clock::now();
+        std::chrono::duration<double> T_elapsed = T_cur - T_start;
+        if (T_elapsed.count() > 9.1487)
+            break;
         User &request = user[i];
         int distance = request.distance;
         if (request.end_time - request.start_time <= distance)
@@ -104,9 +108,7 @@ void advanced(string selectedCase)
         }
         else
         {
-            auto T_cur = std::chrono::system_clock::now();
-            std::chrono::duration<double> T_elapsed = T_cur - T_start;
-            if (T_elapsed.count() > 7.5)
+            if (T_elapsed.count() > 7.487)
             {
                 i++;
                 continue;

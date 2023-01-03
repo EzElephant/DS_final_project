@@ -45,6 +45,9 @@ void write_record(string selectedCase)
         cerr << '\t' << "could not open file " << path;
     for (int i = 0; i <= max_record_id; i++)
     {
-        file << record[i].bike_id << " S" << record[i].start << " S" << record[i].end << ' ' << record[i].start_time << ' ' << record[i].end_time << " U" << record[i].rider << '\n';
+        if (record[i].rider == -1)
+            file << record[i].bike_id << " S" << record[i].start << " S" << record[i].end << ' ' << record[i].start_time << ' ' << record[i].end_time << " -1" << '\n';
+        else
+            file << record[i].bike_id << " S" << record[i].start << " S" << record[i].end << ' ' << record[i].start_time << ' ' << record[i].end_time << " U" << record[i].rider << '\n';
     }
 }
