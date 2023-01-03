@@ -62,10 +62,22 @@ bool User::operator<(const User &rhs)
 {
     if (!over)
     {
-        if (start_time != rhs.start_time)
-            return start_time < rhs.start_time;
+        if (adv)
+        {
+            if (start_time != rhs.start_time)
+                return start_time < rhs.start_time;
+            else if (distance != rhs.distance)
+                return distance > rhs.distance;
+            else
+                return id < rhs.id;
+        }
         else
-            return id < rhs.id;
+        {
+            if (start_time != rhs.start_time)
+                return start_time < rhs.start_time;
+            else
+                return id < rhs.id;
+        }
     }
     else
     {
@@ -77,10 +89,22 @@ bool User::operator>(const User &rhs)
 {
     if (!over)
     {
-        if (start_time != rhs.start_time)
-            return start_time > rhs.start_time;
+        if (adv)
+        {
+            if (start_time != rhs.start_time)
+                return start_time > rhs.start_time;
+            else if (distance != rhs.distance)
+                return distance > rhs.distance;
+            else
+                return id > rhs.id;
+        }
         else
-            return id > rhs.id;
+        {
+            if (start_time != rhs.start_time)
+                return start_time > rhs.start_time;
+            else
+                return id > rhs.id;
+        }
     }
     else
     {

@@ -2,7 +2,7 @@
 stringstream ss;
 double discount;
 int count_limit;
-bool over;
+bool over, adv;
 int max_bike_id, max_user_id, max_station_id, max_bike_type, max_record_id;
 double ori_price[MAX_BIKE];
 Bike bike[MAX_BIKE];

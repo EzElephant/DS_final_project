@@ -6,6 +6,7 @@ void basic(string selectedCase)
     // insert your code here
     cerr << "Basic Verson for " << selectedCase << endl;
 
+    adv = false;
     readcase(selectedCase);
     floyd_warshall();
     quick_sort(user, 0, max_user_id);
@@ -16,7 +17,7 @@ void basic(string selectedCase)
         type_idx[bike[i].type] = i;
     max_record_id = 0;
 
-    for (int i = 0; i < max_user_id; i++)
+    for (int i = 0; i <= max_user_id; i++)
     {
         User &request = user[i];
         int distance = edge[request.start][request.end];

@@ -1,8 +1,12 @@
 #include "./nthu_bike.h"
+#include <chrono>
+#include <ctime>
+const int GAP = 10;
 
 void advanced(string selectedCase)
 {
     // insert your code here
+    auto T_start = std::chrono::system_clock::now();
     cerr << "Advanced Verson for " << selectedCase << endl;
 
     adv = true;
@@ -18,12 +22,15 @@ void advanced(string selectedCase)
         type_idx[bike[i].type] = i;
     max_record_id = 0;
 
-    for (int i = 0; i <= max_user_id; i++)
+    for (int i = 0; i <= max_user_id;)
     {
         User &request = user[i];
-        int distance = edge[request.start][request.end];
+        int distance = request.distance;
         if (request.end_time - request.start_time <= distance)
+        {
+            i++;
             continue;
+        }
         double mx = -1;
         int mx_idx = -1;
         for (int j = 0; j < request.size(); j++)
@@ -32,32 +39,46 @@ void advanced(string selectedCase)
             for (int k = type_idx[type]; k < type_idx[type + 1]; k++)
             {
                 Bike &cur = bike[k];
-                if ((cur.station == request.start) && (cur.aviable <= request.start_time) && (cur.count < count_limit))
+                if (cur.count >= count_limit || cur.price <= 0)
+                    continue;
+                if ((cur.station == request.start) && (cur.aviable <= request.start_time)) // 同站
                 {
                     if (cur.price > mx)
                     {
                         mx = cur.price;
                         mx_idx = k;
                     }
-                    else if (cur.price == mx)
-                    {
-                        if (cur.id < bike[mx_idx].id)
-                        {
-                            mx_idx = k;
-                        }
-                    }
                     break;
+                }
+                else if (cur.aviable + edge[cur.station][request.start] <= request.start_time) // 不同站
+                {
+                    if (cur.price > mx)
+                    {
+                        mx = cur.price;
+                        mx_idx = k;
+                    }
                 }
             }
         }
         if (mx != -1)
         {
+            Bike &cur = bike[mx_idx];
+            if (cur.station != request.start)
+            {
+                record[max_record_id].rider = -1;
+                record[max_record_id].start = cur.station;
+                record[max_record_id].end = request.start;
+                record[max_record_id].bike_id = cur.id;
+                record[max_record_id].start_time = cur.aviable;
+                record[max_record_id].end_time = cur.aviable + edge[cur.station][request.start];
+                max_record_id++;
+            }
+
             request.accept = true;
             record[max_record_id].rider = request.id;
             record[max_record_id].start = request.start;
             record[max_record_id].end = request.end;
 
-            Bike &cur = bike[mx_idx];
             request.bike_id = cur.id;
             record[max_record_id].bike_id = cur.id;
 
@@ -78,6 +99,24 @@ void advanced(string selectedCase)
             {
                 swap(bike[mx_idx], bike[mx_idx + 1]);
                 mx_idx++;
+            }
+            i++;
+        }
+        else
+        {
+            auto T_cur = std::chrono::system_clock::now();
+            std::chrono::duration<double> T_elapsed = T_cur - T_start;
+            if (T_elapsed.count() > 7.5)
+            {
+                i++;
+                continue;
+            }
+            request.start_time += GAP;
+            int j = i;
+            while (j < max_user_id && user[j] > user[j + 1])
+            {
+                swap(user[j], user[j + 1]);
+                j++;
             }
         }
     }
