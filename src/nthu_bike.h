@@ -21,7 +21,7 @@ public:
 class User
 {
 public:
-    int id, start_time, end_time, start, end, bike_id, used_start, used_end, revenue;
+    int id, start_time, end_time, start, end, bike_id, used_start, used_end, revenue, distance;
     bool accept;
     int *accept_bike;
     User();
@@ -55,7 +55,7 @@ extern stringstream ss; // 共用節省資源
 extern double discount;
 extern int count_limit;
 extern int max_bike_id, max_user_id, max_station_id, max_bike_type, max_record_id;
-extern bool over;
+extern bool over, adv;
 extern double ori_price[MAX_BIKE];
 extern Bike bike[MAX_BIKE];
 extern int edge[MAX_STATION][MAX_STATION];
