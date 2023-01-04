@@ -26,7 +26,7 @@ void advanced(string selectedCase)
     {
         auto T_cur = std::chrono::system_clock::now();
         std::chrono::duration<double> T_elapsed = T_cur - T_start;
-        if (T_elapsed.count() > 9.1487)
+        if (T_elapsed.count() > 58.7)
             break;
         User &request = user[i];
         int distance = request.distance;
@@ -61,6 +61,7 @@ void advanced(string selectedCase)
                         mx = cur.price;
                         mx_idx = k;
                     }
+                    break;
                 }
             }
         }
@@ -108,7 +109,7 @@ void advanced(string selectedCase)
         }
         else
         {
-            if (T_elapsed.count() > 7.487)
+            if (T_elapsed.count() > 54.87)
             {
                 i++;
                 continue;
