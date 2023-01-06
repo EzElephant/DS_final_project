@@ -144,3 +144,39 @@ bool Record::operator>(const Record &rhs)
 {
     return rider > rhs.rider;
 }
+
+// PriorityQueue
+PriorityQueue::PriorityQueue()
+{
+    heap = new int[MAX_USER];
+    _size = 0;
+}
+
+void PriorityQueue::push(const int &e)
+{
+    int currentNode = ++_size;
+    while (currentNode != 1 && user[heap[currentNode / 2]] > user[e])
+    {
+        heap[currentNode] = heap[currentNode / 2];
+        currentNode /= 2;
+    }
+    heap[currentNode] = e;
+}
+
+void PriorityQueue::pop()
+{
+    int lastE = heap[_size--];
+    int currentNode = 1;
+    int child = 2;
+    while (child <= _size)
+    {
+        if (child < _size && user[heap[child]] > user[heap[child + 1]])
+            child++;
+        if (user[lastE] < user[heap[child]])
+            break;
+        heap[currentNode] = heap[child];
+        currentNode = child;
+        child *= 2;
+    }
+    heap[currentNode] = lastE;
+}

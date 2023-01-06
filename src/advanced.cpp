@@ -14,7 +14,9 @@ void advanced(string selectedCase)
     floyd_warshall();
     for (int i = 0; i <= max_user_id; i++)
         user[i].distance = edge[user[i].start][user[i].end];
-    quick_sort(user, 0, max_user_id);
+    PriorityQueue pq;
+    for (int i = 0; i <= max_user_id; i++)
+        pq.push(i);
     quick_sort(bike, 0, max_bike_id);
     type_idx = new int[max_bike_type + 2];
     type_idx[max_bike_type + 1] = max_bike_id + 1;
@@ -22,17 +24,18 @@ void advanced(string selectedCase)
         type_idx[bike[i].type] = i;
     max_record_id = 0;
 
-    for (int i = 0; i <= max_user_id;)
+    while (pq.size())
     {
         auto T_cur = std::chrono::system_clock::now();
         std::chrono::duration<double> T_elapsed = T_cur - T_start;
         if (T_elapsed.count() > 58.7)
             break;
-        User &request = user[i];
+        int cur = pq.top();
+        pq.pop();
+        User &request = user[cur];
         int distance = request.distance;
         if (request.end_time - request.start_time <= distance)
         {
-            i++;
             continue;
         }
         double mx = -1;
@@ -105,22 +108,15 @@ void advanced(string selectedCase)
                 swap(bike[mx_idx], bike[mx_idx + 1]);
                 mx_idx++;
             }
-            i++;
         }
         else
         {
             if (T_elapsed.count() > 54.87)
             {
-                i++;
                 continue;
             }
             request.start_time += GAP;
-            int j = i;
-            while (j < max_user_id && user[j] > user[j + 1])
-            {
-                swap(user[j], user[j + 1]);
-                j++;
-            }
+            pq.push(cur);
         }
     }
 

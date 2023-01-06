@@ -43,6 +43,20 @@ public:
     bool operator>(const Record &);
 };
 
+class PriorityQueue
+{
+public:
+    PriorityQueue();
+    ~PriorityQueue() { delete heap; }
+    int size() const { return _size; }
+    int top() const { return heap[1]; }
+    void push(const int &e);
+    void pop();
+private:
+    int *heap;
+    int _size;
+};
+
 const int MAX_USER = 200087;
 const int MAX_BIKE = 10087;
 const int MAX_STATION = 1001;
