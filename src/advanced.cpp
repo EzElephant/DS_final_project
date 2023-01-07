@@ -1,7 +1,7 @@
 #include "./nthu_bike.h"
 #include <chrono>
 #include <ctime>
-const int GAP = 10;
+const int GAP = 5;
 
 void advanced(string selectedCase)
 {
@@ -28,7 +28,7 @@ void advanced(string selectedCase)
     {
         auto T_cur = std::chrono::system_clock::now();
         std::chrono::duration<double> T_elapsed = T_cur - T_start;
-        if (T_elapsed.count() > 58.7)
+        if (T_elapsed.count() > 54.87)
             break;
         int cur = pq.top();
         pq.pop();
@@ -38,7 +38,7 @@ void advanced(string selectedCase)
         {
             continue;
         }
-        double mx = -1;
+        double mx = 0;
         int mx_idx = -1;
         for (int j = 0; j < request.size(); j++)
         {
@@ -46,7 +46,7 @@ void advanced(string selectedCase)
             for (int k = type_idx[type]; k < type_idx[type + 1]; k++)
             {
                 Bike &cur = bike[k];
-                if (cur.count >= count_limit || cur.price <= 0)
+                if (cur.count >= count_limit || cur.price <= 0.0)
                     continue;
                 if ((cur.station == request.start) && (cur.aviable <= request.start_time)) // 同站
                 {
@@ -68,7 +68,7 @@ void advanced(string selectedCase)
                 }
             }
         }
-        if (mx != -1)
+        if (mx != 0)
         {
             Bike &cur = bike[mx_idx];
             if (cur.station != request.start)
@@ -96,7 +96,7 @@ void advanced(string selectedCase)
             request.used_end = request.start_time + distance;
             record[max_record_id].end_time = request.start_time + distance;
 
-            request.revenue = distance * cur.price;
+            request.revenue = distance * (cur.price + 0.000001);
             cur.price -= discount;
             cur.count++;
             cur.station = request.end;
@@ -111,7 +111,7 @@ void advanced(string selectedCase)
         }
         else
         {
-            if (T_elapsed.count() > 54.87)
+            if (T_elapsed.count() > 44.87)
             {
                 continue;
             }

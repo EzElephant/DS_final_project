@@ -23,7 +23,7 @@ void basic(string selectedCase)
         int distance = edge[request.start][request.end];
         if (request.end_time - request.start_time <= distance)
             continue;
-        double mx = -1;
+        double mx = 0.0;
         int mx_idx = -1;
         for (int j = 0; j < request.size(); j++)
         {
@@ -31,7 +31,7 @@ void basic(string selectedCase)
             for (int k = type_idx[type]; k < type_idx[type + 1]; k++)
             {
                 Bike &cur = bike[k];
-                if ((cur.station == request.start) && (cur.aviable <= request.start_time) && (cur.count < count_limit))
+                if ((cur.station == request.start) && (cur.aviable <= request.start_time) && (cur.count < count_limit) && (cur.price >= 0.0))
                 {
                     if (cur.price > mx)
                     {
@@ -49,7 +49,7 @@ void basic(string selectedCase)
                 }
             }
         }
-        if (mx != -1)
+        if (mx != 0.0)
         {
             request.accept = true;
             record[max_record_id].rider = request.id;
@@ -66,7 +66,7 @@ void basic(string selectedCase)
             request.used_end = request.start_time + distance;
             record[max_record_id].end_time = request.start_time + distance;
 
-            request.revenue = distance * cur.price;
+            request.revenue = distance * (cur.price + 0.000001);
             cur.price -= discount;
             cur.count++;
             cur.station = request.end;
